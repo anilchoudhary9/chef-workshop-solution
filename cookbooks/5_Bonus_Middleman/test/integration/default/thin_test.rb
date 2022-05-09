@@ -1,0 +1,26 @@
+# Chef InSpec test for recipe 5_Bonus_Middleman::thin
+
+# The Chef InSpec reference, with examples and extensive documentation, can be
+# found at https://docs.chef.io/inspec/resources/
+
+unless os.windows?
+  # This is an example test, replace with your own test.
+  describe user('root'), :skip do
+    it { should exist }
+  end
+end
+
+# This is an example test, replace it with your own test.
+describe port(80), :skip do
+  it { should_not be_listening }
+end
+
+# Required working directory
+describe file('/home/apache/.bundle/cache/compact_index') do
+  it { should exist }
+end
+
+# Middleman has been deployed
+describe file('/var/www/middleman/config.rb') do
+  it { should exist }
+end
