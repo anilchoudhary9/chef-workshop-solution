@@ -17,22 +17,25 @@ end
 # make working directory
 directory 'ruby' do
   mode '0755'
-  path '/home/vagrant/ruby'
   action :create
 end
 
 # download tarball
 # wget http://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.3.tar.gz
-remote_file '/home/vagrant/ruby/ruby-2.1.3.tar.gz' do
+remote_file '/ruby/ruby-2.1.3.tar.gz' do
   source 'http://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.3.tar.gz'
-  not_if { ::File.exist?('/usr/local/bin/ruby') }
 end
 
 # extract tarball to /home/vagrant/ruby
-archive_file 'ruby-2.1.3.tar.gz' do
-  path '/home/vagrant/ruby/ruby-2.1.3.tar.gz'
-  destination '/home/vagrant/ruby'
-  action :extract
+# archive_file 'ruby-2.1.3.tar.gz' do
+#   path '/home/vagrant/ruby/ruby-2.1.3.tar.gz'
+#   destination '/home/vagrant/ruby'
+#   action :extract
+# end
+
+execute 'extract_ruby' do
+  command 'sudo tar -xzf ruby-2.1.3.tar.gz --strip-components=1'
+  cwd '/ruby'
 end
 
 directory '/usr/bin/ruby' do
@@ -43,16 +46,19 @@ end
 # Build ruby
 # cd ruby-2.1.3 & ./configure & make install
 execute 'build_ruby' do
-  command 'sudo ./configure && sudo make install'
-  cwd '/home/vagrant/ruby/ruby-2.1.3'
-  not_if { ::File.exist?('/usr/local/bin/ruby') }
+  command 'sudo ./configure'
+  cwd '/ruby'
+end
+
+execute 'build_ruby' do
+  command 'sudo make install'
+  cwd '/ruby'
 end
 
 # rm -rf ~/ruby
-directory '/home/vagrant/ruby' do
+directory '/ruby' do
   recursive true
   action :delete
-  only_if { ::File.exist?('/home/vagrant/ruby') }
 end
 
 # cp /usr/local/bin/ruby /usr/bin/ruby

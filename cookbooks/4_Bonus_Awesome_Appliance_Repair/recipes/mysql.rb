@@ -6,7 +6,7 @@
 
 mysql_service 'default' do
   port '3306'
-  version '5.6'
+  version '8.0'
   initial_root_password node.default['4_Bonus_Awesome_Appliance_Repair']['mysql_root_pass']
   action [:create, :start]
 end

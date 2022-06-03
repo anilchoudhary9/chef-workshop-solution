@@ -4,14 +4,14 @@
 #
 # Copyright:: 2022, The Authors, All Rights Reserved.
 
-include_recipe '1_Windows::networkLogonRights'
+include_recipe '3_Windows::networkLogonRights'
 
-include_recipe '1_Windows::remoteInteractiveLogon'
+include_recipe '3_Windows::remoteInteractiveLogon'
 
-include_recipe '1_Windows::denyAdminStatus'
+include_recipe '3_Windows::denyAdminStatus'
 
-include_recipe '1_Windows::disableCAD'
+include_recipe '3_Windows::disableCAD'
 
-include_recipe '1_Windows::ntp-clinet'
+include_recipe '3_Windows::ntp-clinet'
 
-include_recipe '1_Windows::ntp-server'
+include_recipe '3_Windows::ntp-server'
